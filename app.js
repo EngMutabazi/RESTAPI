@@ -46,13 +46,17 @@ personne.push(newPerson);
 })
 
 app.put('/api/person/:id',(req,res)=>{
+    const result=validateInput(req.body)
+    if(result.error){
+        res.status(404).send(result.error.details[0].message)
+    }
+    
     const user=personne.find(u=>u.id===parseInt(req.params.id));
     if(!user) return res.status(404).send('user not found')
     user.name=req.body.name;
     user.surname=req.body.surname;
 res.send(user)
 })
-
 app.delete('/api/person/:id',(req,res)=>{
     const delPerson=personne.find(user=>user.id===parseInt(req.params.id))
     if(!delPerson) return res.status(404).send('person not found');
