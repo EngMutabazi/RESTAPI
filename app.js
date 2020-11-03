@@ -7,10 +7,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
-const personne=[{
-    id:1,name:'kangalo',surname:'jack',age:'20'
-}]
-
+const personne=[]
 app.get('/api/person',(req,res)=>{
     res.status(200).send(personne)
 })
@@ -22,13 +19,6 @@ if(!trouver)res.status(404).send('person not found');
 })
 
 app.post('/api/person',(req,res)=>{
-
-    // const schema={
-    //     name:Joi.string().min(3).required(),
-    //     surname:Joi.string().min(3).required(),
-    //     age:Joi.number().required()
-    // }
-
 
 const result=validateInput(req.body)
 
@@ -65,13 +55,11 @@ app.delete('/api/person/:id',(req,res)=>{
     res.status(200).send(delPerson)
 })
 function validateInput(person){
-
     const schema={
-        name:Joi.string().min(1).required(),
+        name:Joi.string().min(2).required(),
         surname:Joi.string().min(1).required(),
         age:Joi.number().required()
     }
    return Joi.validate(person,schema);
 }
-
-app.listen(3000,()=>console.log('the app is running at port 3000'))
+app.listen(4000,()=>console.log('the server is running on port 4000'))
